@@ -17,7 +17,7 @@ public class A {
     void m2() {}
     private void m3() {}
 
-    void test()_ {
+    void test() {
         this.f1 = 10;
         this.f2 = 20;
         this.f3 = 30;
