@@ -1,5 +1,7 @@
 package etc.generic.good;
 
+import java.util.List;
+
 public class Person {
     private String name;
 
