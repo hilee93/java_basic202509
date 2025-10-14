@@ -12,7 +12,7 @@ public class Grouping {
         // 채식요리와 아닌 요리로 메뉴를 나눠보자
         // 두 분류로 나누어 줌. (분류 기준을 논리값으로 전달해 주어야 함)
         Map<Boolean, List<Dish>> veggieMenu = Menu.MENU_LIST.stream()
-                .collect(Collectors.partitioningBy(dish -> dish.isVegetarian())); // (Dish::isVegetarian)
+                .collect(Collectors.partitioningBy(Dish::isVegetarian)); // (Dish::isVegetarian)
 
         System.out.println("--- 채식 메뉴 ---");
         System.out.println(veggieMenu.get(true));
@@ -25,7 +25,7 @@ public class Grouping {
 
         // 요리를 종류(Type)별로 그룹화 해 보자!
         Map<Dish.Type, List<Dish>> menuByType = Menu.MENU_LIST.stream()
-                .collect(Collectors.groupingBy(d -> d.getType())); // ( Dish::getType)
+                .collect(Collectors.groupingBy(Dish::getType)); // ( Dish::getType)
 
         System.out.println("--- 육류 메뉴 ---");
         System.out.println(menuByType.get(Dish.Type.MEAT));
@@ -34,7 +34,7 @@ public class Grouping {
 
         // 종류별로 나눈 메뉴를 칼로리 기준(500 넘으면 고칼로리, 나머지 저칼로리)으로 한번 더 그룹화 해줘!
         Map<Dish.Type, Map<String, List<Dish>>> detailedMenu = Menu.MENU_LIST.stream()
-                .collect(Collectors.groupingBy(d -> d.getType(),  // 1차 분류: Type
+                .collect(Collectors.groupingBy(Dish::getType,  // 1차 분류: Type
                         Collectors.groupingBy(d -> {
                             if (d.getCalories() > 500) {
                                 return "고칼로리";
@@ -53,18 +53,18 @@ public class Grouping {
 
         // 종류별 요리 개수
         Map<Dish.Type, Long> dishCount = Menu.MENU_LIST.stream()
-                .collect(Collectors.groupingBy(d -> d.getType(), Collectors.counting()));// ( Dish::getType)
+                .collect(Collectors.groupingBy(Dish::getType, Collectors.counting()));// ( Dish::getType)
         System.out.println(dishCount);
 
         // 종류별 요리 총 칼로리
         Map<Dish.Type, Integer> totalCalByType = Menu.MENU_LIST.stream()
-                .collect(Collectors.groupingBy(d -> d.getType(), Collectors.summingInt(d -> d.getCalories())));
+                .collect(Collectors.groupingBy(Dish::getType, Collectors.summingInt(Dish::getCalories)));
         System.out.println(totalCalByType);
 
         PrintUtil.printLine();
 
         Map<Dish.Type, IntSummaryStatistics> calorieStats = Menu.MENU_LIST.stream()
-                .collect(Collectors.groupingBy(d -> d.getType(), Collectors.summarizingInt(d -> d.getCalories())));
+                .collect(Collectors.groupingBy(Dish::getType, Collectors.summarizingInt(Dish::getCalories)));
 
         // 요리 종류별 통계 꾸러미가 리턴됨 (개수, 평균, 합계, 최댓값, 최솟값)
         System.out.println(calorieStats);
