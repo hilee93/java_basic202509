@@ -9,7 +9,7 @@ public class Main {
         s1.method1();
         s1.method2();
 
-        // SIngleton.s = null; (x)
+        // Singleton.s = null; (x)
         Singleton s2 = Singleton.getInstance();
         Singleton s3 = Singleton.getInstance();
         Singleton s4 = Singleton.getInstance();
